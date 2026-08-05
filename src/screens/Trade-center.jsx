@@ -22,6 +22,7 @@ const TradeCenter = () => {
   const [isAuthError, setIsAuthError] = useState(false);
   const [authInfo, setAuthInfo] = useState('');
   const [trades, setTrades] = useState([]);
+   const { user } = useSelector(state => state.userAuth);
  const currencyMap = {
   // North America
   US: "USD",
