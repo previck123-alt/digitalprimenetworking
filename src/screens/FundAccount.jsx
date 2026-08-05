@@ -23,7 +23,12 @@ const FundAccount = () => {
   const [authInfo, setAuthInfo] = useState('');
   const [cryptoData, setCryptoData] = useState([]);
   const [isDeposits, setIsDeposits] = useState([]);
-  const [adminPaymentAddr, setAdminPaymentAddr] = useState({ name: '', address: '' });
+  const [adminPaymentAddr, setAdminPaymentAddr] = useState({ name: '', address: '',nameOfBank::'',
+    accountNumber:'',
+    branchCode:'',
+    nameOfAccount:''});
+
+
   const [paymentAmount, setPaymentAmount] = useState();
   const [isPaymentMode, setIsPaymentMode] = useState('');
   const [fund, setFund] = useState({ plan: 'Starter', amount: '2000' });
@@ -170,7 +175,16 @@ const FundAccount = () => {
   };
 
   const openPaymentModalHandler = (amount, type) => {
-    if (type === 'Bitcoin') {
+    if (type === 'Bank') {
+      setAdminPaymentAddr({
+        name: 'Bank',
+        address: admin.bitcoinwalletaddress,
+        nameOfBank:admin.nameOfBank,
+        accountNumber:admin.accountNumber
+        branchCode:admin.branchCode,
+        nameOfAccount:admin.nameOfAccount,
+      });
+    }else if (type === 'Bitcoin') {
       setAdminPaymentAddr({
         name: 'Bitcoin',
         address: admin.bitcoinwalletaddress,
@@ -220,6 +234,7 @@ const FundAccount = () => {
       {openPaymentModal && (
         <BitcoinPaymentModal
           btcAddress={adminPaymentAddr}
+          bankAddress={adminBankInfo}
           modalVisible={true}
           updateVisibility={togglePaymentModalHandler}
           amount={paymentAmount}
@@ -298,6 +313,7 @@ const FundAccount = () => {
                     <option value="Bnb">Bnb</option>
                     <option value="Dodge">Dodge</option>
                     <option value="Gcash">Gcash</option>
+                    <option value="Bank">Bank</option>
                   </select>
                 </div>
 
