@@ -407,7 +407,6 @@ const formatCurrency = (amount) =>{
     minimumFractionDigits: 2,
   }).format(Number(amount || 0));
 }
-  const navigate = useNavigate();
 
   const openMobileMenu = () => {
     setSidebarOpen(prev => !prev);
