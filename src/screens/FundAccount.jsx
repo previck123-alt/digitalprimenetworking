@@ -23,10 +23,15 @@ const FundAccount = () => {
   const [authInfo, setAuthInfo] = useState('');
   const [cryptoData, setCryptoData] = useState([]);
   const [isDeposits, setIsDeposits] = useState([]);
-  const [adminPaymentAddr, setAdminPaymentAddr] = useState({ name: '', address: '',nameOfBank::'',
+
+  const [adminPaymentAddr, setAdminPaymentAddr] = useState({ 
+    name: '', 
+    address: '',
+    nameOfBank:'',
     accountNumber:'',
     branchCode:'',
-    nameOfAccount:''});
+    nameOfAccount:''
+  });
 
 
   const [paymentAmount, setPaymentAmount] = useState();
@@ -160,9 +165,9 @@ const FundAccount = () => {
       setIsDeposits(res.message);
       setAuthInfo('Deposit initiated. Scroll down the history table, click the pay now, and follow the instruction to complete payment');
       setIsAuthError(true);
-
       setFund({ plan: '', amount: '' });
       setIsPaymentMode('');
+
     } catch (error) {
       setLoading(false);
       setIsAuthError(true);
