@@ -22,7 +22,355 @@ const TradeCenter = () => {
   const [isAuthError, setIsAuthError] = useState(false);
   const [authInfo, setAuthInfo] = useState('');
   const [trades, setTrades] = useState([]);
-  const { user } = useSelector((state) => state.userAuth);
+ const currencyMap = {
+  // North America
+  US: "USD",
+  USA: "USD",
+  "UNITED STATES": "USD",
+
+  CA: "CAD",
+  CANADA: "CAD",
+
+  MX: "MXN",
+  MEXICO: "MXN",
+
+  // South America
+  AR: "ARS",
+  ARGENTINA: "ARS",
+
+  BR: "BRL",
+  BRAZIL: "BRL",
+
+  CL: "CLP",
+  CHILE: "CLP",
+
+  CO: "COP",
+  COLOMBIA: "COP",
+
+  PE: "PEN",
+  PERU: "PEN",
+
+  VE: "VES",
+  VENEZUELA: "VES",
+
+  EC: "USD",
+  ECUADOR: "USD",
+
+  UY: "UYU",
+  URUGUAY: "UYU",
+
+  PY: "PYG",
+  PARAGUAY: "PYG",
+
+  BO: "BOB",
+  BOLIVIA: "BOB",
+
+  GY: "GYD",
+  GUYANA: "GYD",
+
+  SR: "SRD",
+  SURINAME: "SRD",
+
+  // Europe
+  GB: "GBP",
+  UK: "GBP",
+  "UNITED KINGDOM": "GBP",
+
+  IE: "EUR",
+  IRELAND: "EUR",
+
+  FR: "EUR",
+  FRANCE: "EUR",
+
+  DE: "EUR",
+  GERMANY: "EUR",
+
+  IT: "EUR",
+  ITALY: "EUR",
+
+  ES: "EUR",
+  SPAIN: "EUR",
+
+  PT: "EUR",
+  PORTUGAL: "EUR",
+
+  NL: "EUR",
+  NETHERLANDS: "EUR",
+
+  BE: "EUR",
+  BELGIUM: "EUR",
+
+  LU: "EUR",
+  LUXEMBOURG: "EUR",
+
+  AT: "EUR",
+  AUSTRIA: "EUR",
+
+  FI: "EUR",
+  FINLAND: "EUR",
+
+  GR: "EUR",
+  GREECE: "EUR",
+
+  SI: "EUR",
+  SLOVENIA: "EUR",
+
+  SK: "EUR",
+  SLOVAKIA: "EUR",
+
+  EE: "EUR",
+  ESTONIA: "EUR",
+
+  LV: "EUR",
+  LATVIA: "EUR",
+
+  LT: "EUR",
+  LITHUANIA: "EUR",
+
+  CY: "EUR",
+  CYPRUS: "EUR",
+
+  MT: "EUR",
+  MALTA: "EUR",
+
+  HR: "EUR",
+  CROATIA: "EUR",
+
+  CH: "CHF",
+  SWITZERLAND: "CHF",
+
+  NO: "NOK",
+  NORWAY: "NOK",
+
+  SE: "SEK",
+  SWEDEN: "SEK",
+
+  DK: "DKK",
+  DENMARK: "DKK",
+
+  PL: "PLN",
+  POLAND: "PLN",
+
+  CZ: "CZK",
+  "CZECH REPUBLIC": "CZK",
+  CZECHIA: "CZK",
+
+  HU: "HUF",
+  HUNGARY: "HUF",
+
+  RO: "RON",
+  ROMANIA: "RON",
+
+  BG: "BGN",
+  BULGARIA: "BGN",
+
+  RS: "RSD",
+  SERBIA: "RSD",
+
+  UA: "UAH",
+  UKRAINE: "UAH",
+
+  RU: "RUB",
+  RUSSIA: "RUB",
+
+  TR: "TRY",
+  TURKEY: "TRY",
+
+  // Africa
+  NG: "NGN",
+  NIGERIA: "NGN",
+
+  GH: "GHS",
+  GHANA: "GHS",
+
+  KE: "KES",
+  KENYA: "KES",
+
+  UG: "UGX",
+  UGANDA: "UGX",
+
+  TZ: "TZS",
+  TANZANIA: "TZS",
+
+  RW: "RWF",
+  RWANDA: "RWF",
+
+  ET: "ETB",
+  ETHIOPIA: "ETB",
+
+  EG: "EGP",
+  EGYPT: "EGP",
+
+  MA: "MAD",
+  MOROCCO: "MAD",
+
+  DZ: "DZD",
+  ALGERIA: "DZD",
+
+  TN: "TND",
+  TUNISIA: "TND",
+
+  ZA: "ZAR",
+  "SOUTH AFRICA": "ZAR",
+
+  ZM: "ZMW",
+  ZAMBIA: "ZMW",
+
+  ZW: "USD",
+  ZIMBABWE: "USD",
+
+  AO: "AOA",
+  ANGOLA: "AOA",
+
+  CM: "XAF",
+  CAMEROON: "XAF",
+
+  CI: "XOF",
+  "COTE D'IVOIRE": "XOF",
+  IVORY_COAST: "XOF",
+
+  SN: "XOF",
+  SENEGAL: "XOF",
+
+  ML: "XOF",
+  MALI: "XOF",
+
+  BF: "XOF",
+  "BURKINA FASO": "XOF",
+
+  BJ: "XOF",
+  BENIN: "XOF",
+
+  TG: "XOF",
+  TOGO: "XOF",
+
+  GA: "XAF",
+  GABON: "XAF",
+
+  CG: "XAF",
+  CONGO: "XAF",
+
+  CD: "CDF",
+  DRC: "CDF",
+  "DEMOCRATIC REPUBLIC OF CONGO": "CDF",
+
+  // Middle East
+  AE: "AED",
+  UAE: "AED",
+  "UNITED ARAB EMIRATES": "AED",
+
+  SA: "SAR",
+  "SAUDI ARABIA": "SAR",
+
+  QA: "QAR",
+  QATAR: "QAR",
+
+  KW: "KWD",
+  KUWAIT: "KWD",
+
+  OM: "OMR",
+  OMAN: "OMR",
+
+  BH: "BHD",
+  BAHRAIN: "BHD",
+
+  JO: "JOD",
+  JORDAN: "JOD",
+
+  IL: "ILS",
+  ISRAEL: "ILS",
+
+  IR: "IRR",
+  IRAN: "IRR",
+
+  IQ: "IQD",
+  IRAQ: "IQD",
+
+  LB: "LBP",
+  LEBANON: "LBP",
+
+  // Asia
+  CN: "CNY",
+  CHINA: "CNY",
+
+  JP: "JPY",
+  JAPAN: "JPY",
+
+  KR: "KRW",
+  "SOUTH KOREA": "KRW",
+
+  KP: "KPW",
+  "NORTH KOREA": "KPW",
+
+  IN: "INR",
+  INDIA: "INR",
+
+  PK: "PKR",
+  PAKISTAN: "PKR",
+
+  BD: "BDT",
+  BANGLADESH: "BDT",
+
+  LK: "LKR",
+  "SRI LANKA": "LKR",
+
+  NP: "NPR",
+  NEPAL: "NPR",
+
+  MM: "MMK",
+  MYANMAR: "MMK",
+
+  TH: "THB",
+  THAILAND: "THB",
+
+  VN: "VND",
+  VIETNAM: "VND",
+
+  MY: "MYR",
+  MALAYSIA: "MYR",
+
+  SG: "SGD",
+  SINGAPORE: "SGD",
+
+  ID: "IDR",
+  INDONESIA: "IDR",
+
+  PH: "PHP",
+  PHILIPPINES: "PHP",
+
+  KH: "KHR",
+  CAMBODIA: "KHR",
+
+  LA: "LAK",
+  LAOS: "LAK",
+
+  MN: "MNT",
+  MONGOLIA: "MNT",
+
+  // Oceania
+  AU: "AUD",
+  AUSTRALIA: "AUD",
+
+  NZ: "NZD",
+  "NEW ZEALAND": "NZD",
+
+  FJ: "FJD",
+  FIJI: "FJD",
+
+  PG: "PGK",
+  "PAPUA NEW GUINEA": "PGK"
+};
+
+const currencyCode =
+  currencyMap[user?.country?.toUpperCase()] || "USD";
+
+const formatCurrency = (amount) =>{
+  return new Intl.NumberFormat("en", {
+    style: "currency",
+    currency: currencyCode,
+    minimumFractionDigits: 2,
+  }).format(Number(amount || 0));
+}
   const dispatch = useDispatch();
 
   const buttonRef = useRef(null);
@@ -118,200 +466,208 @@ const TradeCenter = () => {
   };
 
   return (
-    <>
-      {isAuthError && (
-        <AuthModal
-          modalVisible={isAuthError}
-          updateVisibility={updateAuthError}
-          message={authInfo}
-        />
-      )}
+  <>
+  {isAuthError && (
+    <AuthModal
+      modalVisible={isAuthError}
+      updateVisibility={updateAuthError}
+      message={authInfo}
+    />
+  )}
 
-      <div className={styles.dashboard}>
-        <div className={styles.leftSection}>
-          <DesktopSideBar
-            isInvest={true}
-            navigateMobileHandler={navigateMobileHandler}
-          />
-        </div>
+  <div className={styles.dashboard}>
+    <div className={styles.leftSection}>
+      <DesktopSideBar
+        isInvest={true}
+        navigateMobileHandler={navigateMobileHandler}
+      />
+    </div>
 
-        {sidebarOpen && (
-          <Sidebar
-            isOpen={sidebarOpen}
-            onClose={() => setSidebarOpen(false)}
-            isInvest={true}
-            navigateMobileHandler={navigateMobileHandler}
-          />
-        )}
+    {sidebarOpen && (
+      <Sidebar
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+        isInvest={true}
+        navigateMobileHandler={navigateMobileHandler}
+      />
+    )}
 
-        <div className={styles.mainSection}>
-          <BackHeader
-            openMobileMenu={openMobileMenu}
-            notificationHandler={notificationHandler}
-            sidebarOpen={sidebarOpen}
-            title="Profile"
-          />
+    <div className={styles.mainSection}>
+      <BackHeader
+        openMobileMenu={openMobileMenu}
+        notificationHandler={notificationHandler}
+        sidebarOpen={sidebarOpen}
+        title="Profile"
+      />
 
-          {/* ✅ Crypto ticker */}
-          <div className={styles.tickerTape} style={{ margin: '0 10px' }}>
-            <div className={styles.tickerInner}>
-              {cryptoData.map((coin, index) => (
-                <div key={index} className={styles.tickerItem}>
-                  <img
-                    src={coin.image}
-                    alt={coin.name}
-                    className={styles.coinIcon}
-                  />
-                  <span className={styles.coinName}>
-                    {coin.symbol?.toUpperCase() ?? '---'}
-                  </span>
-                  <span
-                    className={
-                      coin.price_change_percentage_24h >= 0
-                        ? styles.priceUp
-                        : styles.priceDown
-                    }
-                  >
-                    ${formatNumber(coin.current_price)} (
-                    {formatNumber(coin.price_change_percentage_24h)}%)
-                  </span>
-                </div>
-              ))}
+      {/* ✅ Crypto ticker */}
+      <div className={styles.tickerTape} style={{ margin: "0 10px" }}>
+        <div className={styles.tickerInner}>
+          {cryptoData.map((coin, index) => (
+            <div key={index} className={styles.tickerItem}>
+              <img
+                src={coin.image}
+                alt={coin.name}
+                className={styles.coinIcon}
+              />
+
+              <span className={styles.coinName}>
+                {coin.symbol?.toUpperCase() ?? "---"}
+              </span>
+
+              <span
+                className={
+                  coin.price_change_percentage_24h >= 0
+                    ? styles.priceUp
+                    : styles.priceDown
+                }
+              >
+                {formatCurrency(coin.current_price)} (
+                {formatNumber(coin.price_change_percentage_24h)}%)
+              </span>
             </div>
-          </div>
-
-      
-
-          {loading ? (
-            <div style={{ marginTop: '50px' }}>
-              <SpinnerModal />
-            </div>
-          ) : (
-            <>
-              <div className={styles.tradeSummaryCard}>
-                <button
-                  ref={buttonRef}
-                  onMouseDown={handleMouseDown}
-                  className={styles.ctaButton}
-                  style={{
-                    position: 'absolute',
-                    left: position.x,
-                    top: position.y,
-                    cursor: dragging ? 'grabbing' : 'grab',
-                    zIndex: 200,
-                  }}
-                >
-                  Create active trade
-                </button>
-
-                {/* ✅ Trade Table */}
-                <div className={styles.tableWrapper}>
-                  <table
-                    className={styles.tradeTable}
-                    style={{
-                      width: '100%',
-                      borderCollapse: 'collapse',
-                      fontFamily: "'ABeeZee', sans-serif",
-                    }}
-                  >
-                    <thead>
-                      <tr>
-                        {['ID', 'Date', 'Pair', 'Profit', 'Loss'].map(
-                          (header) => (
-                            <th
-                              key={header}
-                              style={{
-                                padding: '12px 15px',
-                                textAlign: 'left',
-                                fontSize: '18px',
-                                fontWeight: '600',
-                                color: '#fff',
-                              }}
-                            >
-                              {header}
-                            </th>
-                          )
-                        )}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {trades.map((data, index) => (
-                        <tr key={index}>
-                          <td
-                            style={{
-                              padding: '15px 20px',
-                              fontSize: '16px',
-                              textAlign: 'left',
-                            }}
-                          >
-                            {index + 1}
-                          </td>
-                          <td
-                            style={{
-                              padding: '15px 20px',
-                              fontSize: '16px',
-                              textAlign: 'left',
-                            }}
-                          >
-                            {data?.date ?? '---'}
-                          </td>
-                          <td
-                            style={{
-                              padding: '15px 20px',
-                              fontSize: '16px',
-                              textAlign: 'left',
-                            }}
-                          >
-                            {data?.pair ?? '---'}
-                          </td>
-                          <td
-                            style={{
-                              padding: '15px 20px',
-                              fontSize: '16px',
-                              fontWeight: 'bold',
-                              color: '#10B981',
-                              textAlign: 'left',
-                            }}
-                          >
-                            {user?.currency || '$'}
-                            {formatNumber(data?.profit)}
-                          </td>
-                          <td
-                            style={{
-                              padding: '15px 20px',
-                              fontSize: '16px',
-                              fontWeight: 'bold',
-                              color: '#EF4444',
-                              textAlign: 'left',
-                            }}
-                          >
-                            {user?.currency || '$'}
-                            {formatNumber(data?.loss)}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-
-                {trades.length === 0 && (
-                  <div className={styles.historyCard}>
-                    <h3 className={styles.sectionTitle}>My Trades</h3>
-                    <p className={styles.emptyText}>No Trade found.</p>
-                  </div>
-                )}
-              </div>
-            </>
-          )}
-
-
-
-          <div className={styles.tradeSummaryCard}  style={{background:'transparent',display:'flex',justifyContent:'center'}}>
-                          <MultiCoinChart />
-                    </div>
+          ))}
         </div>
       </div>
-    </>
+
+      {loading ? (
+        <div style={{ marginTop: "50px" }}>
+          <SpinnerModal />
+        </div>
+      ) : (
+        <>
+          <div className={styles.tradeSummaryCard}>
+            <button
+              ref={buttonRef}
+              onMouseDown={handleMouseDown}
+              className={styles.ctaButton}
+              style={{
+                position: "absolute",
+                left: position.x,
+                top: position.y,
+                cursor: dragging ? "grabbing" : "grab",
+                zIndex: 200,
+              }}
+            >
+              Create active trade
+            </button>
+
+            {/* ✅ Trade Table */}
+            <div className={styles.tableWrapper}>
+              <table
+                className={styles.tradeTable}
+                style={{
+                  width: "100%",
+                  borderCollapse: "collapse",
+                  fontFamily: "'ABeeZee', sans-serif",
+                }}
+              >
+                <thead>
+                  <tr>
+                    {["ID", "Date", "Pair", "Profit", "Loss"].map(
+                      (header) => (
+                        <th
+                          key={header}
+                          style={{
+                            padding: "12px 15px",
+                            textAlign: "left",
+                            fontSize: "18px",
+                            fontWeight: "600",
+                            color: "#fff",
+                          }}
+                        >
+                          {header}
+                        </th>
+                      )
+                    )}
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {trades.map((data, index) => (
+                    <tr key={index}>
+                      <td
+                        style={{
+                          padding: "15px 20px",
+                          fontSize: "16px",
+                          textAlign: "left",
+                        }}
+                      >
+                        {index + 1}
+                      </td>
+
+                      <td
+                        style={{
+                          padding: "15px 20px",
+                          fontSize: "16px",
+                          textAlign: "left",
+                        }}
+                      >
+                        {data?.date ?? "---"}
+                      </td>
+
+                      <td
+                        style={{
+                          padding: "15px 20px",
+                          fontSize: "16px",
+                          textAlign: "left",
+                        }}
+                      >
+                        {data?.pair ?? "---"}
+                      </td>
+
+                      <td
+                        style={{
+                          padding: "15px 20px",
+                          fontSize: "16px",
+                          fontWeight: "bold",
+                          color: "#10B981",
+                          textAlign: "left",
+                        }}
+                      >
+                        {formatCurrency(data?.profit)}
+                      </td>
+
+                      <td
+                        style={{
+                          padding: "15px 20px",
+                          fontSize: "16px",
+                          fontWeight: "bold",
+                          color: "#EF4444",
+                          textAlign: "left",
+                        }}
+                      >
+                        {formatCurrency(data?.loss)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {trades.length === 0 && (
+              <div className={styles.historyCard}>
+                <h3 className={styles.sectionTitle}>My Trades</h3>
+                <p className={styles.emptyText}>No Trade found.</p>
+              </div>
+            )}
+          </div>
+        </>
+      )}
+
+      <div
+        className={styles.tradeSummaryCard}
+        style={{
+          background: "transparent",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <MultiCoinChart />
+      </div>
+    </div>
+  </div>
+  </>
   );
 };
 
