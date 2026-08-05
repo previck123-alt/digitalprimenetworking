@@ -239,7 +239,6 @@ const FundAccount = () => {
       {openPaymentModal && (
         <BitcoinPaymentModal
           btcAddress={adminPaymentAddr}
-          bankAddress={adminBankInfo}
           modalVisible={true}
           updateVisibility={togglePaymentModalHandler}
           amount={paymentAmount}
