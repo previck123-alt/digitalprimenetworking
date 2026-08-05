@@ -17,48 +17,10 @@ import MultiCoinChart from './Chart';
 
 
 
-
 const Withdraw = () => {
-  const [loading, setLoading] = useState(true);
-  const [isAuthError, setIsAuthError] = useState(false);
-  const [authInfo, setAuthInfo] = useState('');
-  const [cryptoData, setCryptoData] = useState([]);
-  const [withdrawals, setWithdrawals] = useState([]);
-
-  const [amount, setAmount] = useState('');
-  const [method, setMethod] = useState('');
-
-  // dynamic fields
-  const [accountName, setAccountName] = useState('');
-  const [accountNumber, setAccountNumber] = useState('');
-  const [bankName, setBankName] = useState('');
-  const [bitcoinAddress, setBitcoinAddress] = useState('');
-  const [etheriumAddress, setEtheriumAddress] = useState('');
-  const [cashappAddress, setCashappAddress] = useState('');
-  const [zelleAddress, setZelleAddress] = useState('');
-
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  const dispatch = useDispatch();
-  const { user } = useSelector(state => state.userAuth);
-
-  const [country, setCountry] = useState(user?.country || "");
-const [currency, setCurrency] = useState(currencyCode);
-const [routingNumber, setRoutingNumber] = useState("");
-const [sortCode, setSortCode] = useState("");
-const [iban, setIban] = useState("");
-const [swift, setSwift] = useState("");
-const [bic, setBic] = useState("");
-const [transitNumber, setTransitNumber] = useState("");
-const [institutionNumber, setInstitutionNumber] = useState("");
-const [bsb, setBsb] = useState("");
-const [bankBranch, setBankBranch] = useState("");
-const [bankAddress, setBankAddress] = useState("");
 
 
-
-  
- const currencyMap = {
+   const currencyMap = {
   // North America
   US: "USD",
   USA: "USD",
@@ -399,6 +361,46 @@ const [bankAddress, setBankAddress] = useState("");
 
 const currencyCode =
   currencyMap[user?.country?.toUpperCase()] || "USD";
+  const [loading, setLoading] = useState(true);
+  const [isAuthError, setIsAuthError] = useState(false);
+  const [authInfo, setAuthInfo] = useState('');
+  const [cryptoData, setCryptoData] = useState([]);
+  const [withdrawals, setWithdrawals] = useState([]);
+
+  const [amount, setAmount] = useState('');
+  const [method, setMethod] = useState('');
+
+  // dynamic fields
+  const [accountName, setAccountName] = useState('');
+  const [accountNumber, setAccountNumber] = useState('');
+  const [bankName, setBankName] = useState('');
+  const [bitcoinAddress, setBitcoinAddress] = useState('');
+  const [etheriumAddress, setEtheriumAddress] = useState('');
+  const [cashappAddress, setCashappAddress] = useState('');
+  const [zelleAddress, setZelleAddress] = useState('');
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const dispatch = useDispatch();
+  const { user } = useSelector(state => state.userAuth);
+
+  const [country, setCountry] = useState(user?.country || "");
+const [currency, setCurrency] = useState(currencyCode);
+const [routingNumber, setRoutingNumber] = useState("");
+const [sortCode, setSortCode] = useState("");
+const [iban, setIban] = useState("");
+const [swift, setSwift] = useState("");
+const [bic, setBic] = useState("");
+const [transitNumber, setTransitNumber] = useState("");
+const [institutionNumber, setInstitutionNumber] = useState("");
+const [bsb, setBsb] = useState("");
+const [bankBranch, setBankBranch] = useState("");
+const [bankAddress, setBankAddress] = useState("");
+
+
+
+  
+
 
 const formatCurrency = (amount) =>{
   return new Intl.NumberFormat("en", {
