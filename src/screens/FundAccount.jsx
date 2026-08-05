@@ -185,7 +185,7 @@ const FundAccount = () => {
         name: 'Bank',
         address: admin.bitcoinwalletaddress,
         nameOfBank:admin.nameOfBank,
-        accountNumber:admin.accountNumber
+        accountNumber:admin.accountNumber,
         branchCode:admin.branchCode,
         nameOfAccount:admin.nameOfAccount,
       });
