@@ -13,392 +13,387 @@ import { createWithdraw, fetchWithdraw } from '../store/action/appStorage';
 import KycWarningCard from '../components/Kyc';
 import MultiCoinChart from './Chart';
 
-
-
-
-
 const Withdraw = () => {
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-   const currencyMap = {
-  // North America
-  US: "USD",
-  USA: "USD",
-  "UNITED STATES": "USD",
+  const { user } = useSelector(state => state.userAuth);
 
-  CA: "CAD",
-  CANADA: "CAD",
+  const currencyMap = {
+    // North America
+    US: "USD",
+    USA: "USD",
+    "UNITED STATES": "USD",
 
-  MX: "MXN",
-  MEXICO: "MXN",
+    CA: "CAD",
+    CANADA: "CAD",
 
-  // South America
-  AR: "ARS",
-  ARGENTINA: "ARS",
+    MX: "MXN",
+    MEXICO: "MXN",
 
-  BR: "BRL",
-  BRAZIL: "BRL",
+    // South America
+    AR: "ARS",
+    ARGENTINA: "ARS",
 
-  CL: "CLP",
-  CHILE: "CLP",
+    BR: "BRL",
+    BRAZIL: "BRL",
 
-  CO: "COP",
-  COLOMBIA: "COP",
+    CL: "CLP",
+    CHILE: "CLP",
 
-  PE: "PEN",
-  PERU: "PEN",
+    CO: "COP",
+    COLOMBIA: "COP",
 
-  VE: "VES",
-  VENEZUELA: "VES",
+    PE: "PEN",
+    PERU: "PEN",
 
-  EC: "USD",
-  ECUADOR: "USD",
+    VE: "VES",
+    VENEZUELA: "VES",
 
-  UY: "UYU",
-  URUGUAY: "UYU",
+    EC: "USD",
+    ECUADOR: "USD",
 
-  PY: "PYG",
-  PARAGUAY: "PYG",
+    UY: "UYU",
+    URUGUAY: "UYU",
 
-  BO: "BOB",
-  BOLIVIA: "BOB",
+    PY: "PYG",
+    PARAGUAY: "PYG",
 
-  GY: "GYD",
-  GUYANA: "GYD",
+    BO: "BOB",
+    BOLIVIA: "BOB",
 
-  SR: "SRD",
-  SURINAME: "SRD",
+    GY: "GYD",
+    GUYANA: "GYD",
 
-  // Europe
-  GB: "GBP",
-  UK: "GBP",
-  "UNITED KINGDOM": "GBP",
+    SR: "SRD",
+    SURINAME: "SRD",
 
-  IE: "EUR",
-  IRELAND: "EUR",
+    // Europe
+    GB: "GBP",
+    UK: "GBP",
+    "UNITED KINGDOM": "GBP",
 
-  FR: "EUR",
-  FRANCE: "EUR",
+    IE: "EUR",
+    IRELAND: "EUR",
 
-  DE: "EUR",
-  GERMANY: "EUR",
+    FR: "EUR",
+    FRANCE: "EUR",
 
-  IT: "EUR",
-  ITALY: "EUR",
+    DE: "EUR",
+    GERMANY: "EUR",
 
-  ES: "EUR",
-  SPAIN: "EUR",
+    IT: "EUR",
+    ITALY: "EUR",
 
-  PT: "EUR",
-  PORTUGAL: "EUR",
+    ES: "EUR",
+    SPAIN: "EUR",
 
-  NL: "EUR",
-  NETHERLANDS: "EUR",
+    PT: "EUR",
+    PORTUGAL: "EUR",
 
-  BE: "EUR",
-  BELGIUM: "EUR",
+    NL: "EUR",
+    NETHERLANDS: "EUR",
 
-  LU: "EUR",
-  LUXEMBOURG: "EUR",
+    BE: "EUR",
+    BELGIUM: "EUR",
 
-  AT: "EUR",
-  AUSTRIA: "EUR",
+    LU: "EUR",
+    LUXEMBOURG: "EUR",
 
-  FI: "EUR",
-  FINLAND: "EUR",
+    AT: "EUR",
+    AUSTRIA: "EUR",
 
-  GR: "EUR",
-  GREECE: "EUR",
+    FI: "EUR",
+    FINLAND: "EUR",
 
-  SI: "EUR",
-  SLOVENIA: "EUR",
+    GR: "EUR",
+    GREECE: "EUR",
 
-  SK: "EUR",
-  SLOVAKIA: "EUR",
+    SI: "EUR",
+    SLOVENIA: "EUR",
 
-  EE: "EUR",
-  ESTONIA: "EUR",
+    SK: "EUR",
+    SLOVAKIA: "EUR",
 
-  LV: "EUR",
-  LATVIA: "EUR",
+    EE: "EUR",
+    ESTONIA: "EUR",
 
-  LT: "EUR",
-  LITHUANIA: "EUR",
+    LV: "EUR",
+    LATVIA: "EUR",
 
-  CY: "EUR",
-  CYPRUS: "EUR",
+    LT: "EUR",
+    LITHUANIA: "EUR",
 
-  MT: "EUR",
-  MALTA: "EUR",
+    CY: "EUR",
+    CYPRUS: "EUR",
 
-  HR: "EUR",
-  CROATIA: "EUR",
+    MT: "EUR",
+    MALTA: "EUR",
 
-  CH: "CHF",
-  SWITZERLAND: "CHF",
+    HR: "EUR",
+    CROATIA: "EUR",
 
-  NO: "NOK",
-  NORWAY: "NOK",
+    CH: "CHF",
+    SWITZERLAND: "CHF",
 
-  SE: "SEK",
-  SWEDEN: "SEK",
+    NO: "NOK",
+    NORWAY: "NOK",
 
-  DK: "DKK",
-  DENMARK: "DKK",
+    SE: "SEK",
+    SWEDEN: "SEK",
 
-  PL: "PLN",
-  POLAND: "PLN",
+    DK: "DKK",
+    DENMARK: "DKK",
 
-  CZ: "CZK",
-  "CZECH REPUBLIC": "CZK",
-  CZECHIA: "CZK",
+    PL: "PLN",
+    POLAND: "PLN",
 
-  HU: "HUF",
-  HUNGARY: "HUF",
+    CZ: "CZK",
+    "CZECH REPUBLIC": "CZK",
+    CZECHIA: "CZK",
 
-  RO: "RON",
-  ROMANIA: "RON",
+    HU: "HUF",
+    HUNGARY: "HUF",
 
-  BG: "BGN",
-  BULGARIA: "BGN",
+    RO: "RON",
+    ROMANIA: "RON",
 
-  RS: "RSD",
-  SERBIA: "RSD",
+    BG: "BGN",
+    BULGARIA: "BGN",
 
-  UA: "UAH",
-  UKRAINE: "UAH",
+    RS: "RSD",
+    SERBIA: "RSD",
 
-  RU: "RUB",
-  RUSSIA: "RUB",
+    UA: "UAH",
+    UKRAINE: "UAH",
 
-  TR: "TRY",
-  TURKEY: "TRY",
+    RU: "RUB",
+    RUSSIA: "RUB",
 
-  // Africa
-  NG: "NGN",
-  NIGERIA: "NGN",
+    TR: "TRY",
+    TURKEY: "TRY",
 
-  GH: "GHS",
-  GHANA: "GHS",
+    // Africa
+    NG: "NGN",
+    NIGERIA: "NGN",
 
-  KE: "KES",
-  KENYA: "KES",
+    GH: "GHS",
+    GHANA: "GHS",
 
-  UG: "UGX",
-  UGANDA: "UGX",
+    KE: "KES",
+    KENYA: "KES",
 
-  TZ: "TZS",
-  TANZANIA: "TZS",
+    UG: "UGX",
+    UGANDA: "UGX",
 
-  RW: "RWF",
-  RWANDA: "RWF",
+    TZ: "TZS",
+    TANZANIA: "TZS",
 
-  ET: "ETB",
-  ETHIOPIA: "ETB",
+    RW: "RWF",
+    RWANDA: "RWF",
 
-  EG: "EGP",
-  EGYPT: "EGP",
+    ET: "ETB",
+    ETHIOPIA: "ETB",
 
-  MA: "MAD",
-  MOROCCO: "MAD",
+    EG: "EGP",
+    EGYPT: "EGP",
 
-  DZ: "DZD",
-  ALGERIA: "DZD",
+    MA: "MAD",
+    MOROCCO: "MAD",
 
-  TN: "TND",
-  TUNISIA: "TND",
+    DZ: "DZD",
+    ALGERIA: "DZD",
 
-  ZA: "ZAR",
-  "SOUTH AFRICA": "ZAR",
+    TN: "TND",
+    TUNISIA: "TND",
 
-  ZM: "ZMW",
-  ZAMBIA: "ZMW",
+    ZA: "ZAR",
+    "SOUTH AFRICA": "ZAR",
 
-  ZW: "USD",
-  ZIMBABWE: "USD",
+    ZM: "ZMW",
+    ZAMBIA: "ZMW",
 
-  AO: "AOA",
-  ANGOLA: "AOA",
+    ZW: "USD",
+    ZIMBABWE: "USD",
 
-  CM: "XAF",
-  CAMEROON: "XAF",
+    AO: "AOA",
+    ANGOLA: "AOA",
 
-  CI: "XOF",
-  "COTE D'IVOIRE": "XOF",
-  IVORY_COAST: "XOF",
+    CM: "XAF",
+    CAMEROON: "XAF",
 
-  SN: "XOF",
-  SENEGAL: "XOF",
+    CI: "XOF",
+    "COTE D'IVOIRE": "XOF",
+    IVORY_COAST: "XOF",
 
-  ML: "XOF",
-  MALI: "XOF",
+    SN: "XOF",
+    SENEGAL: "XOF",
 
-  BF: "XOF",
-  "BURKINA FASO": "XOF",
+    ML: "XOF",
+    MALI: "XOF",
 
-  BJ: "XOF",
-  BENIN: "XOF",
+    BF: "XOF",
+    "BURKINA FASO": "XOF",
 
-  TG: "XOF",
-  TOGO: "XOF",
+    BJ: "XOF",
+    BENIN: "XOF",
 
-  GA: "XAF",
-  GABON: "XAF",
+    TG: "XOF",
+    TOGO: "XOF",
 
-  CG: "XAF",
-  CONGO: "XAF",
+    GA: "XAF",
+    GABON: "XAF",
 
-  CD: "CDF",
-  DRC: "CDF",
-  "DEMOCRATIC REPUBLIC OF CONGO": "CDF",
+    CG: "XAF",
+    CONGO: "XAF",
 
-  // Middle East
-  AE: "AED",
-  UAE: "AED",
-  "UNITED ARAB EMIRATES": "AED",
+    CD: "CDF",
+    DRC: "CDF",
+    "DEMOCRATIC REPUBLIC OF CONGO": "CDF",
 
-  SA: "SAR",
-  "SAUDI ARABIA": "SAR",
+    // Middle East
+    AE: "AED",
+    UAE: "AED",
+    "UNITED ARAB EMIRATES": "AED",
 
-  QA: "QAR",
-  QATAR: "QAR",
+    SA: "SAR",
+    "SAUDI ARABIA": "SAR",
 
-  KW: "KWD",
-  KUWAIT: "KWD",
+    QA: "QAR",
+    QATAR: "QAR",
 
-  OM: "OMR",
-  OMAN: "OMR",
+    KW: "KWD",
+    KUWAIT: "KWD",
 
-  BH: "BHD",
-  BAHRAIN: "BHD",
+    OM: "OMR",
+    OMAN: "OMR",
 
-  JO: "JOD",
-  JORDAN: "JOD",
+    BH: "BHD",
+    BAHRAIN: "BHD",
 
-  IL: "ILS",
-  ISRAEL: "ILS",
+    JO: "JOD",
+    JORDAN: "JOD",
 
-  IR: "IRR",
-  IRAN: "IRR",
+    IL: "ILS",
+    ISRAEL: "ILS",
 
-  IQ: "IQD",
-  IRAQ: "IQD",
+    IR: "IRR",
+    IRAN: "IRR",
 
-  LB: "LBP",
-  LEBANON: "LBP",
+    IQ: "IQD",
+    IRAQ: "IQD",
 
-  // Asia
-  CN: "CNY",
-  CHINA: "CNY",
+    LB: "LBP",
+    LEBANON: "LBP",
 
-  JP: "JPY",
-  JAPAN: "JPY",
+    // Asia
+    CN: "CNY",
+    CHINA: "CNY",
 
-  KR: "KRW",
-  "SOUTH KOREA": "KRW",
+    JP: "JPY",
+    JAPAN: "JPY",
 
-  KP: "KPW",
-  "NORTH KOREA": "KPW",
+    KR: "KRW",
+    "SOUTH KOREA": "KRW",
 
-  IN: "INR",
-  INDIA: "INR",
+    KP: "KPW",
+    "NORTH KOREA": "KPW",
 
-  PK: "PKR",
-  PAKISTAN: "PKR",
+    IN: "INR",
+    INDIA: "INR",
 
-  BD: "BDT",
-  BANGLADESH: "BDT",
+    PK: "PKR",
+    PAKISTAN: "PKR",
 
-  LK: "LKR",
-  "SRI LANKA": "LKR",
+    BD: "BDT",
+    BANGLADESH: "BDT",
 
-  NP: "NPR",
-  NEPAL: "NPR",
+    LK: "LKR",
+    "SRI LANKA": "LKR",
 
-  MM: "MMK",
-  MYANMAR: "MMK",
+    NP: "NPR",
+    NEPAL: "NPR",
 
-  TH: "THB",
-  THAILAND: "THB",
+    MM: "MMK",
+    MYANMAR: "MMK",
 
-  VN: "VND",
-  VIETNAM: "VND",
+    TH: "THB",
+    THAILAND: "THB",
 
-  MY: "MYR",
-  MALAYSIA: "MYR",
+    VN: "VND",
+    VIETNAM: "VND",
 
-  SG: "SGD",
-  SINGAPORE: "SGD",
+    MY: "MYR",
+    MALAYSIA: "MYR",
 
-  ID: "IDR",
-  INDONESIA: "IDR",
+    SG: "SGD",
+    SINGAPORE: "SGD",
 
-  PH: "PHP",
-  PHILIPPINES: "PHP",
+    ID: "IDR",
+    INDONESIA: "IDR",
 
-  KH: "KHR",
-  CAMBODIA: "KHR",
+    PH: "PHP",
+    PHILIPPINES: "PHP",
 
-  LA: "LAK",
-  LAOS: "LAK",
+    KH: "KHR",
+    CAMBODIA: "KHR",
 
-  MN: "MNT",
-  MONGOLIA: "MNT",
+    LA: "LAK",
+    LAOS: "LAK",
 
-  // Oceania
-  AU: "AUD",
-  AUSTRALIA: "AUD",
+    MN: "MNT",
+    MONGOLIA: "MNT",
 
-  NZ: "NZD",
-  "NEW ZEALAND": "NZD",
+    // Oceania
+    AU: "AUD",
+    AUSTRALIA: "AUD",
 
-  FJ: "FJD",
-  FIJI: "FJD",
+    NZ: "NZD",
+    "NEW ZEALAND": "NZD",
 
-  PG: "PGK",
-  "PAPUA NEW GUINEA": "PGK"
-};
+    FJ: "FJD",
+    FIJI: "FJD",
 
-const currencyCode =
-  currencyMap[user?.country?.toUpperCase()] || "USD";
+    PG: "PGK",
+    "PAPUA NEW GUINEA": "PGK",
+  };
 
+  const [country, setCountry] = useState(user?.country || "");
 
-  
+  const [currency, setCurrency] = useState(
+    currencyMap[(user?.country || "").toUpperCase()] || "USD"
+  );
+
   const [loading, setLoading] = useState(true);
   const [isAuthError, setIsAuthError] = useState(false);
-  const [authInfo, setAuthInfo] = useState('');
+  const [authInfo, setAuthInfo] = useState("");
   const [cryptoData, setCryptoData] = useState([]);
   const [withdrawals, setWithdrawals] = useState([]);
 
-  const [amount, setAmount] = useState('');
-  const [method, setMethod] = useState('');
+  const [amount, setAmount] = useState("");
+  const [method, setMethod] = useState("");
 
-  // dynamic fields
-  const [accountName, setAccountName] = useState('');
-  const [accountNumber, setAccountNumber] = useState('');
-  const [bankName, setBankName] = useState('');
-  const [bitcoinAddress, setBitcoinAddress] = useState('');
-  const [etheriumAddress, setEtheriumAddress] = useState('');
-  const [cashappAddress, setCashappAddress] = useState('');
-  const [zelleAddress, setZelleAddress] = useState('');
+  const [accountName, setAccountName] = useState("");
+  const [accountNumber, setAccountNumber] = useState("");
+  const [bankName, setBankName] = useState("");
+  const [bitcoinAddress, setBitcoinAddress] = useState("");
+  const [etheriumAddress, setEtheriumAddress] = useState("");
+  const [cashappAddress, setCashappAddress] = useState("");
+  const [zelleAddress, setZelleAddress] = useState("");
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const dispatch = useDispatch();
-  const { user } = useSelector(state => state.userAuth);
-
-  const [country, setCountry] = useState(user?.country || "");
-const [currency, setCurrency] = useState(currencyCode);
-const [routingNumber, setRoutingNumber] = useState("");
-const [sortCode, setSortCode] = useState("");
-const [iban, setIban] = useState("");
-const [swift, setSwift] = useState("");
-const [bic, setBic] = useState("");
-const [transitNumber, setTransitNumber] = useState("");
-const [institutionNumber, setInstitutionNumber] = useState("");
-const [bsb, setBsb] = useState("");
-const [bankBranch, setBankBranch] = useState("");
-const [bankAddress, setBankAddress] = useState("");
+  const [routingNumber, setRoutingNumber] = useState("");
+  const [sortCode, setSortCode] = useState("");
+  const [iban, setIban] = useState("");
+  const [swift, setSwift] = useState("");
+  const [bic, setBic] = useState("");
+  const [transitNumber, setTransitNumber] = useState("");
+  const [institutionNumber, setInstitutionNumber] = useState("");
+  const [bsb, setBsb] = useState("");
+  const [bankBranch, setBankBranch] = useState("");
+  const [bankAddress, setBankAddress] = useState("");
 
 
 
