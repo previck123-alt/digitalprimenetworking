@@ -419,4 +419,3 @@ const FundAccount = () => {
 };
 
 export default FundAccount;
-
