@@ -15,6 +15,7 @@ import { createDeposit, fetchDeposit } from '../store/action/appStorage';
 import KycWarningCard from '../components/Kyc';
 import MultiCoinChart from './Chart';
 
+
 const FundAccount = () => {
   const [loading, setLoading] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -296,7 +297,7 @@ const FundAccount = () => {
             </div>
           </div>
 
-
+<KycWarningCard message={user.information} />
 
 
           {!loading ? (

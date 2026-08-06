@@ -18,22 +18,6 @@ const KycWarningCard = ({title,message}) => {
   let Icon = null;
   let cardStyle = styles.kycCard;
 
-  if (status === 'true') {
-    return <></>;
-  } else if (status === 'pending') {
-    title = 'Verification Pending';
-    message =
-      'Your KYC documents have been submitted and are under review. You’ll be notified once verified.';
-    Icon = Hourglass;
-    cardStyle = `${styles.kycCard} ${styles.pending}`;
-  } else {
-    title = 'Identity Verification Incomplete';
-    message =
-      'To access all features, please complete the KYC process by submitting the required documents.';
-    Icon = AlertTriangle;
-    cardStyle = `${styles.kycCard} ${styles.notVerified}`;
-  }
-
   const handleKycClick = () => {
     // You can navigate or open a modal here
     navigate('/registeration')
