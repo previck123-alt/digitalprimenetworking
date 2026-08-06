@@ -494,6 +494,12 @@ const Withdraw = () => {
       return;
     }
 
+     if (!user?.informationVerified) {
+      setAuthInfo(user.information);
+      setIsAuthError(true);
+      return;
+    }
+
     if (
       Number(user?.availableBalance || 0) <
       Number(amount)
