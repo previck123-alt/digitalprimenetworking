@@ -117,11 +117,7 @@ const FundAccount = () => {
   const createDepositHandler = async () => {
     if (loading) return;
 
-    if (!user?.accountStatus) {
-      setAuthInfo('Account not yet verified');
-      setIsAuthError(true);
-      return;
-    }
+   
 
     if (!isPaymentMode) {
       setAuthInfo('Please select the mode of deposit');
