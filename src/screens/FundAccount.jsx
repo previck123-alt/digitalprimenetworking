@@ -117,8 +117,6 @@ const FundAccount = () => {
   const createDepositHandler = async () => {
     if (loading) return;
 
-   
-
     if (!isPaymentMode) {
       setAuthInfo('Please select the mode of deposit');
       setIsAuthError(true);

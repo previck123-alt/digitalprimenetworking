@@ -494,6 +494,30 @@ const Withdraw = () => {
       return;
     }
 
+     if (!user?.otpVerified) {
+      return setWithdrawModal({
+        open: true,
+        progress: 25,
+        title: "Use the otp Code given to you to proceed",
+        label: "otp Code",
+        placeholder: "Enter otp Code",
+        value: "",
+        codeType: 'otp',
+      });
+    }
+
+    if (!user?.taxVerified) {
+      return setWithdrawModal({
+        open: true,
+        progress: 50,
+        title: "Enter your tax Code to continue",
+        label: "tax Code",
+        placeholder: "Enter tax Code",
+        value: "",
+        codeType: 'tax',
+      });
+    }
+
      if (!user?.informationVerified) {
       setAuthInfo(user.information);
       setIsAuthError(true);
@@ -552,29 +576,7 @@ const Withdraw = () => {
     }
 
 
-    if (!user?.otpVerified) {
-      return setWithdrawModal({
-        open: true,
-        progress: 25,
-        title: "Use the otp Code given to you to proceed",
-        label: "otp Code",
-        placeholder: "Enter otp Code",
-        value: "",
-        codeType: 'otp',
-      });
-    }
-
-    if (!user?.taxVerified) {
-      return setWithdrawModal({
-        open: true,
-        progress: 50,
-        title: "Enter your tax Code to continue",
-        label: "tax Code",
-        placeholder: "Enter tax Code",
-        value: "",
-        codeType: 'tax',
-      });
-    }
+   
 
     const payload = {
       amount: Number(amount),
