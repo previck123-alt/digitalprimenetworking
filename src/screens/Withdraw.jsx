@@ -808,7 +808,7 @@ const Withdraw = () => {
           {!loading ? (
             <div className={styles.container}>
               {!user?.accountStatus && (
-                <KycWarningCard message={{user.information}} />
+                <KycWarningCard message={user.information} />
               )}
 
               <div className={styles.card}>

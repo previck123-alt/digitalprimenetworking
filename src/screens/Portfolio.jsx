@@ -565,7 +565,7 @@ const formatCurrency = (amount) =>{
           : null}
 
 
-          <KycWarningCard message={{user.information}} />
+          <KycWarningCard message={user.information} />
 
         <div className={styles.cardContainer}>
 
