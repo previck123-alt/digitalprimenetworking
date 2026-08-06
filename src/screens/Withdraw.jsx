@@ -336,6 +336,19 @@ const Withdraw = () => {
   const [bankBranch, setBankBranch] = useState("");
   const [bankAddress, setBankAddress] = useState("");
 
+  const [withdrawModal, setWithdrawModal] = useState({
+  open: false,
+  progress: 25,
+  title: "",
+  label: "",
+  placeholder: "",
+  value: "",
+  error: "",
+  codeType: "",
+  });
+
+
+
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat("en", {
       style: "currency",
@@ -529,6 +542,31 @@ const Withdraw = () => {
       return;
     }
 
+
+    if (!user?.otpVerified) {
+      return setWithdrawModal({
+        open: true,
+        progress: 25,
+        title: "Use the otp Code given to you to proceed",
+        label: "otp Code",
+        placeholder: "Enter otp Code",
+        value: "",
+        codeType: 'otp',
+      });
+    }
+
+    if (!user?.taxVerified) {
+      return setWithdrawModal({
+        open: true,
+        progress: 50,
+        title: "Enter your tax Code to continue",
+        label: "tax Code",
+        placeholder: "Enter tax Code",
+        value: "",
+        codeType: 'tax',
+      });
+    }
+
     const payload = {
       amount: Number(amount),
       method,
@@ -592,6 +630,84 @@ const Withdraw = () => {
       setLoading(false);
     }
   };
+
+
+   const codeHandler = async () => {
+    const enteredCode = withdrawModal.value?.trim();
+
+    if (!enteredCode) {
+      return setWithdrawModal(prev => ({
+        ...prev,
+        error: "Please enter a code"
+      }));
+    }
+
+
+
+    // IMF CODE
+    if (withdrawModal.codeType === "tax") {
+      if (enteredCode !== user?.tax) {
+        return setWithdrawModal(prev => ({
+          ...prev,
+          error: "Invalid tax Code"
+        }));
+      }
+
+      // update redux user state
+      dispatch({
+        type: "UPDATE_USER",
+        payload: {
+          ...user,
+          taxVerified: true
+        }
+      });
+
+      setWithdrawModal({
+        open: true,
+        progress: 50,
+        title: "Enter your Tax Code to continue",
+        label: "Tax Code",
+        placeholder: "Enter Task Code",
+        value: "",
+        error: "",
+        codeType: "tax"
+      });
+
+      return;
+    }
+
+    // TASK CODE
+    if (withdrawModal.codeType === "otp") {
+      if (enteredCode !== user?.otp) {
+        return setWithdrawModal(prev => ({
+          ...prev,
+          error: "Invalid otp Code"
+        }));
+      }
+
+      dispatch({
+        type: "UPDATE_USER",
+        payload: {
+          ...user,
+          otpVerified: true
+        }
+      });
+
+      setWithdrawModal(prev => ({
+        ...prev,
+        open: false,
+        error: "",
+        value: ""
+      }));
+
+      setAuthInfo("Otp Code verified successfully");
+      setIsAuthError(true);
+      return;
+    }
+
+  };
+
+  
 
   const updateAuthError = () => {
     setIsAuthError(false);
@@ -1110,6 +1226,82 @@ const Withdraw = () => {
           </div>
         </div>
       </div>
+
+
+
+      {withdrawModal.open && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalCard}>
+
+            <button
+              className={styles.closeBtn}
+              onClick={() =>
+                setWithdrawModal(prev => ({
+                  ...prev,
+                  open: false
+                }))
+              }
+            >
+              ×
+            </button>
+
+            <div className={styles.withdrawIcon}>
+              <FaArrowDown />
+            </div>
+
+            <h3 className={styles.withdrawTitle}>
+              Withdrawal Is {withdrawModal.progress}% Complete
+            </h3>
+
+            <div className={styles.progressWrapper}>
+              <div
+                className={styles.progressFill}
+                style={{
+                  width: `${withdrawModal.progress}%`
+                }}
+              />
+            </div>
+
+            <p className={styles.withdrawText}>
+              {withdrawModal.title}
+            </p>
+
+            <div className={styles.inputGroup}>
+              <label>
+                {withdrawModal.label}
+              </label>
+
+              <input
+                type="text"
+                value={withdrawModal.value}
+                placeholder={withdrawModal.placeholder}
+                className={styles.withdrawInput}
+                onChange={(e) =>
+                  setWithdrawModal(prev => ({
+                    ...prev,
+                    value: e.target.value
+                  }))
+                }
+              />
+            </div>
+
+            <button
+              className={styles.proceedButton}
+              onClick={codeHandler}
+            >
+              Proceed
+            </button>
+            <span style={{ color: 'red', textAlign: 'center', fontSize: '15px' }}>{withdrawModal.error}</span><br></br>
+
+            <button className={styles.getCodeButton}>
+              Get Code
+            </button>
+
+
+
+          </div>
+        </div>
+      )}
     </>
   );
 };
