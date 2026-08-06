@@ -51,7 +51,6 @@ export const BitcoinPaymentModal = ({
 
           <div
             style={{
-              background: "#f8fafc",
               border: "1px solid #e5e7eb",
               borderRadius: "10px",
               padding: "18px",
