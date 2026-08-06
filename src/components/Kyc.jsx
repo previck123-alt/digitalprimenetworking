@@ -9,17 +9,12 @@ import styles from './Kyc.module.css';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-const KycWarningCard = () => {
+const KycWarningCard = ({title,message}) => {
   const { user } = useSelector((state) => state.userAuth);
   const status = user?.kycVerified;
   let navigate = useNavigate()
 
 
-  
-
-
-  let title = '';
-  let message = '';
   let Icon = null;
   let cardStyle = styles.kycCard;
 

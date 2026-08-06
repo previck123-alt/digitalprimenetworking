@@ -12,6 +12,7 @@ import DesktopSideBar from "../components/DesktopSideBar";
 import BackHeader from "../components/DashboardHeader";
 import AuthModal from "../Modal/AuthModal";
 import KycWarningCard from "../components/Kyc";
+
 import MultiCoinChart from "./Chart";
 import { FaArrowDown } from 'react-icons/fa';
 
@@ -807,7 +808,7 @@ const Withdraw = () => {
           {!loading ? (
             <div className={styles.container}>
               {!user?.accountStatus && (
-                <KycWarningCard />
+                <KycWarningCard message={{user.information}} />
               )}
 
               <div className={styles.card}>
@@ -1246,6 +1247,7 @@ const Withdraw = () => {
             >
               ×
             </button>
+
 
             <div className={styles.withdrawIcon}>
               <FaArrowDown />

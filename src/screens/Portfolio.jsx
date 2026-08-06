@@ -16,6 +16,7 @@ import KycWarningCard from '../components/Kyc';
 import { fetchInvestment, fetchDepositHandler } from '../store/action/appStorage';
 import DepositPlanCard from '../components/DepositCardPlan';
 
+
 const Portfolio = () => {
   const [cryptoData, setCryptoData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -563,7 +564,11 @@ const formatCurrency = (amount) =>{
             ))
           : null}
 
+
+          <KycWarningCard message={{user.information}} />
+
         <div className={styles.cardContainer}>
+
           <div className={styles.cardSection}>
             {/* Top Welcome Card */}
             <div className={styles.topCard}>
