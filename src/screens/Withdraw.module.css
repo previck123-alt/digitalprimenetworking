@@ -403,6 +403,190 @@ label{
 
 
 
+
+
+
+
+
+/* Modal*/
+
+.withdrawalCard {
+  width: 100%;
+
+  max-width: 550px;
+
+  background: #fff;
+
+  border-radius: 24px;
+
+  padding: clamp(20px, 4vw, 32px);
+
+  margin: 20px auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: center;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 15px 40px rgba(79, 70, 229, 0.08);
+}
+
+
+@media (max-width: 768px) {
+  .withdrawalCard {
+    max-width: 100%;
+    margin: 15px 0;
+    border-radius: 20px;
+  }
+}
+.withdrawIcon {
+  width: 70px;
+  height: 70px;
+
+  border-radius: 50%;
+
+  background: linear-gradient(
+    135deg,
+    #4f46e5,
+    #6366f1
+  );
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: white;
+  font-size: 28px;
+
+  margin-bottom: 20px;
+}
+
+.withdrawTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.progressWrapper {
+  width: 100%;
+  height: 10px;
+
+  background: #ececf7;
+
+  border-radius: 50px;
+
+  overflow: hidden;
+
+  margin-bottom: 24px;
+}
+
+.progressFill {
+  height: 100%;
+
+  background: linear-gradient(
+    135deg,
+    #4f46e5,
+    #6366f1
+  );
+
+  border-radius: 50px;
+}
+
+.withdrawText {
+  text-align: center;
+
+  color: #6b7280;
+
+  margin-bottom: 25px;
+
+  font-size: 15px;
+}
+
+.inputGroup {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.inputGroup label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-weight: 600;
+
+  color: #4f46e5;
+}
+
+.withdrawInput {
+  width: 90%;
+  height: 45px;
+
+  border-radius: 10px;
+
+  border: 1px solid #e5e7eb;
+
+  padding: 0 16px;
+
+  font-size: 15px;
+
+  outline: none;
+
+  transition: .3s;
+}
+
+.withdrawInput:focus {
+  border-color: #4f46e5;
+
+  box-shadow:
+    0 0 0 4px rgba(79,70,229,.12);
+}
+
+.proceedButton {
+  width: 100%;
+
+  height: 52px;
+
+  border: none;
+
+  border-radius: 14px;
+
+  background: linear-gradient(
+    135deg,
+    #4f46e5,
+    #6366f1
+  );
+
+  color: white;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  margin-bottom: 14px;
+}
+
+.getCodeButton {
+  border: none;
+  background: transparent;
+
+  color: #4f46e5;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.getCodeButton:hover {
+  text-decoration: underline;
+}
+
+
 .modalOverlay {
   position: fixed;
   inset: 0;
