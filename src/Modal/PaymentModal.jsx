@@ -7,9 +7,268 @@ export const BitcoinPaymentModal = ({
   updateVisibility,
   btcAddress,
   amount,
+  user,
 }) => {
   const [copied, setCopied] = useState(false);
   const [showQR, setShowQR] = useState(true);
+
+  // ============================
+  // CURRENCY MAP
+  // ============================
+  const currencyMap = {
+    // North America
+    US: "USD",
+    USA: "USD",
+    "UNITED STATES": "USD",
+    CA: "CAD",
+    CANADA: "CAD",
+    MX: "MXN",
+    MEXICO: "MXN",
+
+    // South America
+    AR: "ARS",
+    ARGENTINA: "ARS",
+    BR: "BRL",
+    BRAZIL: "BRL",
+    CL: "CLP",
+    CHILE: "CLP",
+    CO: "COP",
+    COLOMBIA: "COP",
+    PE: "PEN",
+    PERU: "PEN",
+    VE: "VES",
+    VENEZUELA: "VES",
+    EC: "USD",
+    ECUADOR: "USD",
+    UY: "UYU",
+    URUGUAY: "UYU",
+    PY: "PYG",
+    PARAGUAY: "PYG",
+    BO: "BOB",
+    BOLIVIA: "BOB",
+    GY: "GYD",
+    GUYANA: "GYD",
+    SR: "SRD",
+    SURINAME: "SRD",
+
+    // Europe
+    GB: "GBP",
+    UK: "GBP",
+    "UNITED KINGDOM": "GBP",
+    IE: "EUR",
+    IRELAND: "EUR",
+    FR: "EUR",
+    FRANCE: "EUR",
+    DE: "EUR",
+    GERMANY: "EUR",
+    IT: "EUR",
+    ITALY: "EUR",
+    ES: "EUR",
+    SPAIN: "EUR",
+    PT: "EUR",
+    PORTUGAL: "EUR",
+    NL: "EUR",
+    NETHERLANDS: "EUR",
+    BE: "EUR",
+    BELGIUM: "EUR",
+    LU: "EUR",
+    LUXEMBOURG: "EUR",
+    AT: "EUR",
+    AUSTRIA: "EUR",
+    FI: "EUR",
+    FINLAND: "EUR",
+    GR: "EUR",
+    GREECE: "EUR",
+    SI: "EUR",
+    SLOVENIA: "EUR",
+    SK: "EUR",
+    SLOVAKIA: "EUR",
+    EE: "EUR",
+    ESTONIA: "EUR",
+    LV: "EUR",
+    LATVIA: "EUR",
+    LT: "EUR",
+    LITHUANIA: "EUR",
+    CY: "EUR",
+    CYPRUS: "EUR",
+    MT: "EUR",
+    MALTA: "EUR",
+    HR: "EUR",
+    CROATIA: "EUR",
+    CH: "CHF",
+    SWITZERLAND: "CHF",
+    NO: "NOK",
+    NORWAY: "NOK",
+    SE: "SEK",
+    SWEDEN: "SEK",
+    DK: "DKK",
+    DENMARK: "DKK",
+    PL: "PLN",
+    POLAND: "PLN",
+    CZ: "CZK",
+    "CZECH REPUBLIC": "CZK",
+    CZECHIA: "CZK",
+    HU: "HUF",
+    HUNGARY: "HUF",
+    RO: "RON",
+    ROMANIA: "RON",
+    BG: "BGN",
+    BULGARIA: "BGN",
+    RS: "RSD",
+    SERBIA: "RSD",
+    UA: "UAH",
+    UKRAINE: "UAH",
+    RU: "RUB",
+    RUSSIA: "RUB",
+    TR: "TRY",
+    TURKEY: "TRY",
+
+    // Africa
+    NG: "NGN",
+    NIGERIA: "NGN",
+    GH: "GHS",
+    GHANA: "GHS",
+    KE: "KES",
+    KENYA: "KES",
+    UG: "UGX",
+    UGANDA: "UGX",
+    TZ: "TZS",
+    TANZANIA: "TZS",
+    RW: "RWF",
+    RWANDA: "RWF",
+    ET: "ETB",
+    ETHIOPIA: "ETB",
+    EG: "EGP",
+    EGYPT: "EGP",
+    MA: "MAD",
+    MOROCCO: "MAD",
+    DZ: "DZD",
+    ALGERIA: "DZD",
+    TN: "TND",
+    TUNISIA: "TND",
+    ZA: "ZAR",
+    "SOUTH AFRICA": "ZAR",
+    ZM: "ZMW",
+    ZAMBIA: "ZMW",
+    ZW: "USD",
+    ZIMBABWE: "USD",
+    AO: "AOA",
+    ANGOLA: "AOA",
+    CM: "XAF",
+    CAMEROON: "XAF",
+    CI: "XOF",
+    "COTE D'IVOIRE": "XOF",
+    IVORY_COAST: "XOF",
+    SN: "XOF",
+    SENEGAL: "XOF",
+    ML: "XOF",
+    MALI: "XOF",
+    BF: "XOF",
+    "BURKINA FASO": "XOF",
+    BJ: "XOF",
+    BENIN: "XOF",
+    TG: "XOF",
+    TOGO: "XOF",
+    GA: "XAF",
+    GABON: "XAF",
+    CG: "XAF",
+    CONGO: "XAF",
+    CD: "CDF",
+    DRC: "CDF",
+    "DEMOCRATIC REPUBLIC OF CONGO": "CDF",
+
+    // Middle East
+    AE: "AED",
+    UAE: "AED",
+    "UNITED ARAB EMIRATES": "AED",
+    SA: "SAR",
+    "SAUDI ARABIA": "SAR",
+    QA: "QAR",
+    QATAR: "QAR",
+    KW: "KWD",
+    KUWAIT: "KWD",
+    OM: "OMR",
+    OMAN: "OMR",
+    BH: "BHD",
+    BAHRAIN: "BHD",
+    JO: "JOD",
+    JORDAN: "JOD",
+    IL: "ILS",
+    ISRAEL: "ILS",
+    IR: "IRR",
+    IRAN: "IRR",
+    IQ: "IQD",
+    IRAQ: "IQD",
+    LB: "LBP",
+    LEBANON: "LBP",
+
+    // Asia
+    CN: "CNY",
+    CHINA: "CNY",
+    JP: "JPY",
+    JAPAN: "JPY",
+    KR: "KRW",
+    "SOUTH KOREA": "KRW",
+    KP: "KPW",
+    "NORTH KOREA": "KPW",
+    IN: "INR",
+    INDIA: "INR",
+    PK: "PKR",
+    PAKISTAN: "PKR",
+    BD: "BDT",
+    BANGLADESH: "BDT",
+    LK: "LKR",
+    "SRI LANKA": "LKR",
+    NP: "NPR",
+    NEPAL: "NPR",
+    MM: "MMK",
+    MYANMAR: "MMK",
+    TH: "THB",
+    THAILAND: "THB",
+    VN: "VND",
+    VIETNAM: "VND",
+    MY: "MYR",
+    MALAYSIA: "MYR",
+    SG: "SGD",
+    SINGAPORE: "SGD",
+    ID: "IDR",
+    INDONESIA: "IDR",
+    PH: "PHP",
+    PHILIPPINES: "PHP",
+    KH: "KHR",
+    CAMBODIA: "KHR",
+    LA: "LAK",
+    LAOS: "LAK",
+    MN: "MNT",
+    MONGOLIA: "MNT",
+
+    // Oceania
+    AU: "AUD",
+    AUSTRALIA: "AUD",
+    NZ: "NZD",
+    "NEW ZEALAND": "NZD",
+    FJ: "FJD",
+    FIJI: "FJD",
+    PG: "PGK",
+    "PAPUA NEW GUINEA": "PGK",
+  };
+
+  // ============================
+  // DETERMINE USER CURRENCY
+  // ============================
+  const currencyCode =
+    currencyMap[user?.country?.toUpperCase()] || "USD";
+
+  // ============================
+  // FORMAT CURRENCY
+  // ============================
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat("en", {
+      style: "currency",
+      currency: currencyCode,
+      minimumFractionDigits: 2,
+    }).format(Number(value || 0));
+  };
 
   if (!modalVisible) return null;
 
@@ -45,7 +304,8 @@ export const BitcoinPaymentModal = ({
           </span>
 
           <p className={styles.modalState}>
-            Please transfer <strong>${amount}</strong> to the bank account
+            Please transfer{" "}
+            <strong>{formatCurrency(amount)}</strong> to the bank account
             below.
           </p>
 
@@ -161,7 +421,8 @@ export const BitcoinPaymentModal = ({
           </span>
 
           <p className={styles.modalState}>
-            Please send <strong>{amount}</strong> worth of{" "}
+            Please send{" "}
+            <strong>{formatCurrency(amount)}</strong> worth of{" "}
             <strong>{btcAddress.name}</strong> to the address below:
           </p>
 
