@@ -230,7 +230,7 @@ export const login = (data) => {
 export const signup = (data) => {
   return async (dispatch, getState) => {
     try {
-      let response = await fetch('https://digital-backend-b0es.onrender.com/signup', {
+      let response = await fetch('https://digitalprimenetworking-backend.onrender.com/signup', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
