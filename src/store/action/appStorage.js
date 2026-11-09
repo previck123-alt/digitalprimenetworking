@@ -123,7 +123,7 @@ export const checkIfIsLoggedIn = () => async (dispatch) => {
     const userId = await idbGet('userId');
     if (!userId) return { bool: false, message: 'no stored user' };
 
-    const response = await fetch(`https://digitalprimenetworking.onrender.com/userbytoken`, {
+    const response = await fetch(`https://digitalprimenetworking-backend.onrender.com/userbytoken`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -178,7 +178,7 @@ export const checkIfIsLoggedIn = () => async (dispatch) => {
 export const login = (data) => {
   return async (dispatch, getState) => {
     try {
-      let response = await fetch('https://digitalprimenetworking.onrender.com/login', {
+      let response = await fetch('https://digitalprimenetworking-backend.onrender.com/login', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -261,7 +261,7 @@ export const signup = (data) => {
 export const verifyEmail = (data) => {
   return async (dispatch, getState) => {
     try {
-      let response = await fetch('https://digitalprimenetworking.onrender.com/verifyemail', {
+      let response = await fetch('https://digitalprimenetworking-backend.onrender.com/verifyemail', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -323,7 +323,7 @@ export const registeration = (data) => {
 
       data = { ...data, email: user.email }
 
-      const response = await fetch(`https://digitalprimenetworking.onrender.com/registeration`, {
+      const response = await fetch(`https://digitalprimenetworking-backend.onrender.com/registeration`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -380,7 +380,7 @@ export const profilePhoto = (data) => {
 
       data = { ...data, email: user.email }
 
-      const response = await fetch(`https://digitalprimenetworking.onrender.com/pofilephoto`, {
+      const response = await fetch(`https://digitalprimenetworking-backend.onrender.com/pofilephoto`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -433,7 +433,7 @@ export const profilePhoto = (data) => {
 export const fetchCopyTraders = (user) => {
   return async (dispatch, getState) => {
     try {
-      let response = await fetch('https://digitalprimenetworking.onrender.com/copy-trades', {
+      let response = await fetch('https://digitalprimenetworking-backend.onrender.com/copy-trades', {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -475,7 +475,7 @@ export const fetchCopyTraders = (user) => {
 export const fetchTrade = (user) => {
   return async (dispatch, getState) => {
     try {
-      let response = await fetch('https://digitalprimenetworking.onrender.com/tradess', {
+      let response = await fetch('https://digitalprimenetworking-backend.onrender.com/tradess', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -520,7 +520,7 @@ export const fetchTrade = (user) => {
 export const changeCurrency = (data) => {
   return async (dispatch, getState) => {
     try {
-      let response = await fetch('https://digitalprimenetworking.onrender.com/changecurrency', {
+      let response = await fetch('https://digitalprimenetworking-backend.onrender.com/changecurrency', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -560,7 +560,7 @@ export const createDeposit = (data) => {
     //do some check on the server if its actually login before proceding to dispatch
     try {
 
-      const response = await fetch(`https://digitalprimenetworking.onrender.com/createdeposit`, {
+      const response = await fetch(`https://digitalprimenetworking-backend.onrender.com/createdeposit`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -608,7 +608,7 @@ export const fetchDeposit = (data) => {
   return async (dispatch, getState) => {
     //do some check on the server if its actually login before proceding to dispatch
     try {
-      const response = await fetch(`https://digitalprimenetworking.onrender.com/fetchdeposit`, {
+      const response = await fetch(`https://digitalprimenetworking-backend.onrender.com/fetchdeposit`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -658,7 +658,7 @@ export const fetchWithdraw = (data) => {
   return async (dispatch, getState) => {
     //do some check on the server if its actually login before proceding to dispatch
     try {
-      const response = await fetch(`https://digitalprimenetworking.onrender.com/fetchwithdraw`, {
+      const response = await fetch(`https://digitalprimenetworking-backend.onrender.com/fetchwithdraw`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -707,7 +707,7 @@ export const createWithdraw = (data) => {
   return async (dispatch, getState) => {
     //do some check on the server if its actually login before proceding to dispatch
     try {
-      const response = await fetch(`https://digitalprimenetworking.onrender.com/createwithdraw`, {
+      const response = await fetch(`https://digitalprimenetworking-backend.onrender.com/createwithdraw`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -750,7 +750,7 @@ export const createWithdraw = (data) => {
 export const fetchPackages = (data) => {
   return async (dispatch, getState) => {
     try {
-      const response = await fetch(`https://digitalprimenetworking.onrender.com/packages`, {
+      const response = await fetch(`https://digitalprimenetworking-backend.onrender.com/packages`, {
         headers: {
           "Content-Type": "application/json",
         }
@@ -791,7 +791,7 @@ export const fetchPackages = (data) => {
 export const fetchInvestment = (id) => {
   return async (dispatch, getState) => {
     try {
-      const response = await fetch(`https://digitalprimenetworking.onrender.com/investment/${id}`, {
+      const response = await fetch(`https://digitalprimenetworking-backend.onrender.com/investment/${id}`, {
         headers: {
           "Content-Type": "application/json",
         }
@@ -834,7 +834,7 @@ export const fetchInvestment = (id) => {
 export const fetchDepositHandler = (userId) => {
   return async (dispatch, getState) => {
     try {
-      const response = await fetch(`https://digitalprimenetworking.onrender.com/fetch-handlers/${userId}`, {
+      const response = await fetch(`https://digitalprimenetworking-backend.onrender.com/fetch-handlers/${userId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -886,7 +886,7 @@ export const  createPay = (data) => {
   return async (dispatch, getState) => {
     //do some check on the server if its actually login before proceding to dispatch
     try {
-      const response = await fetch(`https://digitalprimenetworking.onrender.com/createpay`, {
+      const response = await fetch(`https://digitalprimenetworking-backend.onrender.com/createpay`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -933,7 +933,7 @@ export const  updatePassword = (data) => {
        let {
         user
       } = getState().userAuth
-      const response = await fetch(`https://digitalprimenetworking.onrender.com/update-password`, {
+      const response = await fetch(`https://digitalprimenetworking-backend.onrender.com/update-password`, {
         headers: {
           "Content-Type": "application/json",
         },
